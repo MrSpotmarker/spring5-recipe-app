@@ -13,8 +13,8 @@
  * (c) 2022 by NETCONOMY Software & Consulting GmbH
  *********************************************************************/
 
-package guru.controllers;
+package guru.springframework.model;
 
-public class IndexController {
-
+public enum Difficulty {
+    EASY, MODERATE, HARD
 }
