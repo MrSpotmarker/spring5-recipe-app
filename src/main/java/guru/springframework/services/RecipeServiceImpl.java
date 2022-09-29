@@ -5,6 +5,7 @@ import guru.springframework.converters.RecipeCommandToRecipe;
 import guru.springframework.converters.RecipeToRecipeCommand;
 import guru.springframework.model.Recipe;
 import guru.springframework.repositories.RecipeRepository;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +47,11 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
+    public void deleteById(Long id) {
+        recipeRepository.deleteById(id);
+    }
+
+    @Override
     public RecipeCommand findCommandById(Long id) {
         return recipeToRecipeCommand.convert(findById(id));
     }
@@ -60,6 +66,7 @@ public class RecipeServiceImpl implements RecipeService{
 
         return recipeToRecipeCommand.convert(savedRecipe);
     }
+
 
 
 }

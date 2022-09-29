@@ -2,6 +2,8 @@ package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.services.RecipeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class RecipeController {
+
+    Logger log = LoggerFactory.getLogger(RecipeController.class);
 
     public static final String RECIPE_ATTRIBUTE = "recipe";
     private final RecipeService recipeService;
@@ -37,10 +41,20 @@ public class RecipeController {
         return "recipe/recipeform";
     }
 
+    @RequestMapping("recipe/{id}/delete")
+    public String deleteRecipe(@PathVariable String id, Model model) {
+        log.debug("Deleting id {}", id);
+
+        recipeService.deleteById(Long.valueOf(id));
+
+        return "redirect:/";
+    }
+
     @PostMapping
     @RequestMapping("recipe")
     public String saveOrUpdate(@ModelAttribute RecipeCommand command) {
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
+
         return "redirect:/recipe/" + savedCommand.getId() + "/show";
     }
 }
